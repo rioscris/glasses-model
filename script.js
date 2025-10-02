@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
 // Variables globales
 let scene, camera, renderer, model;
 let videoElement = document.getElementById('video');
@@ -24,7 +27,7 @@ function initThree() {
 
   // Cargar modelo de anteojos
   console.log('Iniciando carga del modelo...');
-  const loader = new THREE.GLTFLoader();
+  const loader = new GLTFLoader();
   loader.load(
     "glasses.glb",
     function(gltf) {
