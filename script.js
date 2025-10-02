@@ -6,6 +6,10 @@ let ctx = canvasElement.getContext('2d');
 
 // Inicializa Three.js
 function initThree() {
+  console.log('Iniciando Three.js...');
+  console.log('Versión de Three.js:', THREE.REVISION);
+  console.log('GLTFLoader disponible:', typeof THREE.GLTFLoader);
+  
   scene = new THREE.Scene();
 
   camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -19,12 +23,26 @@ function initThree() {
   scene.add(light);
 
   // Cargar modelo de anteojos
+  console.log('Iniciando carga del modelo...');
   const loader = new THREE.GLTFLoader();
-  loader.load("glasses.glb", function(gltf) {
-    model = gltf.scene;
-    model.scale.set(0.1, 0.1, 0.1); // Ajustar tamaño
-    scene.add(model);
-  });
+  loader.load(
+    "glasses.glb",
+    function(gltf) {
+      console.log('Modelo cargado exitosamente:', gltf);
+      model = gltf.scene;
+      model.scale.set(0.1, 0.1, 0.1); // Ajustar tamaño
+      scene.add(model);
+      console.log('Modelo añadido a la escena');
+    },
+    function(xhr) {
+      // Función de progreso
+      console.log('Progreso de carga: ' + (xhr.loaded / xhr.total * 100) + '%');
+    },
+    function(error) {
+      // Función de error
+      console.error('Error cargando el modelo:', error);
+    }
+  );
 }
 
 // Render loop
